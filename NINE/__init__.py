@@ -124,6 +124,7 @@ class NINE(Service):
         )
 
         title.data["chapters"] = data.get("cue_points") or title.data.get("video", {}).get("cuePoints")
+        title.data["duration"] = data.get("duration") or title.data.get("video", {}).get("duration")
 
         source = self._best_source(data.get("sources", []))
         if not source:
@@ -148,11 +149,12 @@ class NINE(Service):
 
     def get_chapters(self, title: Movie | Episode) -> Chapters:
         cue_points = title.data.get("chapters") or []
+        duration = title.data.get("duration")
         chapters = []
         for cue in cue_points:
             timestamp = cue.get("time")
             if timestamp and timestamp > 0:
-                chapters.append(Chapter(timestamp=timestamp * 1000))
+                chapters.append(Chapter(timestamp=self._chapter_timestamp_ms(timestamp, duration)))
 
         return Chapters(chapters)
 
@@ -451,6 +453,13 @@ class NINE(Service):
             return "srt"
 
         return source_url.lower().split("?")[0].rsplit(".", 1)[-1] or "vtt"
+
+    @staticmethod
+    def _chapter_timestamp_ms(timestamp: int | float, duration: int | float | None) -> int:
+        if duration and timestamp <= duration / 1000:
+            return int(round(timestamp * 1000))
+
+        return int(round(timestamp))
 
     @staticmethod
     def _mark_descriptive_audio(tracks: Tracks) -> None:
