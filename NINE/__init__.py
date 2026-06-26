@@ -28,7 +28,7 @@ class NINE(Service):
     Authorization: None
     Geofence: AU (API and downloads)
     Robustness:
-      Widevine: L3 1080p where DRM is enabled
+      Widevine: L3 720p, some 1080p clips
       Clear HLS: up to source quality
 
     \b
