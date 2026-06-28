@@ -33,8 +33,7 @@ class VM(Service):
     Tips:
         - Use complete series, VOD, or replay URLs:
           https://play.virginmediatelevision.ie/shows/<uuid>/<slug>
-          https://play.virginmediatelevision.ie/watch/vod/52528176/blood-ep1
-          https://play.virginmediatelevision.ie/watch/replay/19196798/six-nations-2025-live-wales-v-ireland
+          https://play.virginmediatelevision.ie/watch/vod/52528176/blood-ep1          
         - Raw numeric video IDs are also accepted. eg: 630bd3d6-80e8-11ef-b3a0-020f80c0527e
     """
 
